@@ -1,10 +1,14 @@
 package org.example;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 
 public class AddToCart {
@@ -19,10 +23,19 @@ public class AddToCart {
 
 
         driver.get("https://rahulshettyacademy.com/seleniumPractise/");
-
-        Thread.sleep(3000);
+      //implicit wait
+        //  driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(5));
 
         addItems(driver, itemsNeeded);
+        driver.findElement(By.xpath("//img[@alt=\"Cart\"]")).click();
+        driver.findElement(By.xpath("//button[text()=\"PROCEED TO CHECKOUT\"]")).click();
+        w.until(ExpectedConditions.visibilityOfElementLocated((By.cssSelector("input.promoCode"))));
+        driver.findElement(By.cssSelector("input.promoCode")).sendKeys("rahulshettyacademy");
+        driver.findElement(By.cssSelector("button.promoBtn")).click();
+
+        w.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("span.promoInfo")));
+        System.out.println(driver.findElement(By.cssSelector("span.promoInfo")).getText());;
 
 
     }
