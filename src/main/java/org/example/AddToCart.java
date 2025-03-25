@@ -1,4 +1,4 @@
-package org.example;
+package main.java.org.example;
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
